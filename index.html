@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Alinhamento CS - Semana 1 de Julho</title>
+    <!-- Tailwind CSS para Estilização Moderna -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fontes Google de Alta Legibilidade -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+        }
+        /* Custom scrollbar para melhor estética */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen">
+
+    <!-- Toast de Notificação -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl transition-all duration-300 transform translate-y-20 opacity-0 flex items-center gap-3 z-50">
+        <span class="text-emerald-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        </span>
+        <span id="toast-message" class="text-sm font-medium">Copiado com sucesso!</span>
+    </div>
+
+    <div class="flex flex-col lg:flex-row min-h-screen">
+        
+        <!-- ================= PAINEL LATERAL DE EDIÇÃO (ESQUERDA) ================= -->
+        <aside id="editor-panel" class="w-full lg:w-[400px] bg-white border-b lg:border-b-0 lg:border-r border-slate-200 p-6 flex-shrink-0 transition-all duration-300 overflow-y-auto max-h-screen lg:sticky lg:top-0 hidden">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">Configuração de Dados</h2>
+                    <p class="text-xs text-slate-500">Altere os dados para simular ou atualizar cenários</p>
+                </div>
+                <button onclick="toggleEditor()" class="p-2 text-slate-500 hover:text-slate-900 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Métricas Base -->
+                <div>
+                    <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3 border-b pb-1">Métricas Base</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-600 mb-1">Total Clientes</label>
+                            <input type="number" id="input-total-clientes" class="w-full px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm" value="344">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-600 mb-1">Com Temperatura</label>
+                            <input type="number" id="input-clientes-classificados" class="w-full px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm" value="288">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-600 mb-1">Fichas Venda Junho</label>
+                            <input type="number" id="input-vendas-junho" class="w-full px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm" value="38">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-600 mb-1">Cancelamentos</label>
+                            <input type="number" id="input-churn" class="w-full px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm" value="3">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Métricas do WhatsApp Hub -->
+                <div>
+                    <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3 border-b pb-1">Hub de WhatsApp</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-600 mb-1">Sem Atribuição</label>
+                            <input type="number" id="input-hub-unassigned" class="w-full px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm" value="22">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-600 mb-1">Conversas Abertas</label>
+                            <input type="number" id="input-hub-open" class="w-full px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm" value="44">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panorama Geral -->
+                <div>
+                    <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3 border-b pb-1">Análise Semanal</h3>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">Mensagem para a Equipe</label>
+                    <textarea id="input-panorama" rows="3" class="w-full px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm resize-none">Alinhamento estratégico para iniciarmos Julho com força máxima! Temos grandes conquistas mapeadas na nossa base, mas precisamos agir imediatamente sobre as lacunas de onboarding, atrasos nas fichas de vendas e os gargalos de conversas abertas no WhatsApp.</textarea>
+                </div>
+
+                <!-- Ações e Listas -->
+                <div>
+                    <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3 border-b pb-1">O que já fizemos (Sucessos)</h3>
+                    <div class="flex gap-2 mb-2">
+                        <input type="text" id="input-vitoria" placeholder="Adicionar conquista..." class="flex-1 px-3 py-1.5 border border-slate-200 rounded-lg focus:outline-none text-xs">
+                        <button onclick="addListItem('vitorias')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold">+</button>
+                    </div>
+                    <ul id="editor-vitorias-list" class="space-y-1.5 max-h-32 overflow-y-auto"></ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3 border-b pb-1">Onde precisamos melhorar</h3>
+                    <div class="flex gap-2 mb-2">
+                        <input type="text" id="input-atencao" placeholder="Adicionar ponto a melhorar..." class="flex-1 px-3 py-1.5 border border-slate-200 rounded-lg focus:outline-none text-xs">
+                        <button onclick="addListItem('atencoes')" class="bg-rose-600 hover:bg-rose-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold">+</button>
+                    </div>
+                    <ul id="editor-atencoes-list" class="space-y-1.5 max-h-32 overflow-y-auto"></ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3 border-b pb-1">Próximos Passos (Plano)</h3>
+                    <div class="flex gap-2 mb-2">
+                        <input type="text" id="input-plano" placeholder="Adicionar ação..." class="flex-1 px-3 py-1.5 border border-slate-200 rounded-lg focus:outline-none text-xs">
+                        <button onclick="addListItem('planos')" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold">+</button>
+                    </div>
+                    <ul id="editor-planos-list" class="space-y-1.5 max-h-32 overflow-y-auto"></ul>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ================= CONTEÚDO PRINCIPAL / APRESENTAÇÃO (DIREITA) ================= -->
+        <main class="flex-1 p-4 md:p-8 overflow-y-auto">
+            
+            <!-- Topo do Painel de Apresentação -->
+            <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm animate-fade-in">
+                <div>
+                    <div class="flex items-center gap-2 text-xs font-bold text-indigo-600 uppercase tracking-widest">
+                        <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span>
+                        Reunião de Alinhamento Interno • Semana 1 de Julho
+                    </div>
+                    <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">Status Operacional e Alinhamento de Processos</h1>
+                    <p class="text-xs text-slate-500 mt-1">Dados reais estruturados para análise coletiva e tomada de decisão da equipe</p>
+                </div>
+                
+                <div class="flex items-center gap-2">
+                    <button onclick="toggleEditor()" class="flex items-center gap-2 px-4 py-2.5 border border-slate-200 rounded-xl bg-white hover:bg-slate-50 transition text-sm font-semibold text-slate-700 shadow-sm">
+                        <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                        <span>Painel de Edição</span>
+                    </button>
+                    <button onclick="copyToClipboardText()" class="flex items-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition text-sm font-semibold shadow-md shadow-indigo-100">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                        <span>Copiar Resumo (Slack/Teams)</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- ================= BANNER DE DESTAQUE: LANÇAMENTO CARPAGO ================= -->
+            <div class="mb-8 bg-gradient-to-r from-indigo-950 via-purple-950 to-indigo-900 text-white p-6 rounded-3xl border border-indigo-500/30 shadow-xl relative overflow-hidden transition-all duration-300 hover:shadow-indigo-950/20">
+                <div class="absolute right-0 top-0 translate-x-12 -translate-y-12 text-indigo-400 opacity-5">
+                    <svg class="w-64 h-64" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z"></path></svg>
+                </div>
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+                    <div class="space-y-2.5">
+                        <span class="inline-flex items-center gap-1.5 bg-indigo-500/30 text-indigo-200 text-xs font-bold px-3 py-1 rounded-full border border-indigo-400/30 uppercase tracking-widest animate-pulse">
+                            🚀 Evento Especial • Sexta-Feira 10/07
+                        </span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight text-white">Lançamento Oficial Carpago!</h2>
+                        <p class="text-xs md:text-sm text-slate-300 max-w-2xl leading-relaxed">
+                            O programa de crédito revolucionário da <strong class="text-white">Auto Avaliar</strong> criado para transformar radicalmente a reposição de estoque de veículos dos nossos clientes parceiros.
+                        </p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 flex flex-col items-center justify-center min-w-[200px] text-center shadow-lg">
+                        <span class="text-[10px] uppercase font-bold text-indigo-200 tracking-widest">Meta de Ativação</span>
+                        <span class="text-4xl font-black text-white my-1">80</span>
+                        <span class="text-xs text-slate-200 font-semibold">Clientes da nossa base</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= CARTÕES DE MÉTRICA DE APRESENTAÇÃO ================= -->
+            <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6 mb-8">
+                
+                <!-- Card 1: Churn Crítico -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-rose-200 shadow-sm relative overflow-hidden transition hover:shadow-md">
+                    <div class="absolute right-0 top-0 w-16 h-16 bg-rose-50 rounded-full -mr-4 -mt-4 opacity-70"></div>
+                    <div class="text-xs font-bold text-rose-600 uppercase tracking-wider flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 bg-rose-600 rounded-full"></span> Cancelamentos
+                    </div>
+                    <div class="text-4xl font-extrabold text-rose-700 mt-2" id="kpi-churn">3</div>
+                    <p class="text-xs text-rose-600 font-semibold mt-1">Impacto direto em receita (MRR)</p>
+                </div>
+
+                <!-- Card 2: Clientes sem Temperatura (ALERTA VERMELHO) -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-amber-200 shadow-sm relative overflow-hidden transition hover:shadow-md">
+                    <div class="absolute right-0 top-0 w-16 h-16 bg-amber-50 rounded-full -mr-4 -mt-4 opacity-70"></div>
+                    <div class="text-xs font-bold text-amber-700 uppercase tracking-wider flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span> Sem Temperatura
+                    </div>
+                    <div class="flex items-baseline gap-2 mt-2">
+                        <div class="text-4xl font-extrabold text-amber-700" id="kpi-sem-saude">56</div>
+                        <div class="text-xs text-amber-600 font-semibold" id="kpi-saude-percent">(16.3% da base)</div>
+                    </div>
+                    <!-- Barra de progresso para evitar erro no script -->
+                    <div class="w-full bg-slate-100 rounded-full h-1.5 mt-2 overflow-hidden">
+                        <div id="kpi-saude-bar" class="bg-amber-500 h-1.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                    <p class="text-xs text-amber-700 font-bold mt-1.5" id="kpi-saude-alert">🚨 Pontos cegos de risco!</p>
+                </div>
+
+                <!-- Card 3: Fichas de Venda Pendentes -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-blue-200 shadow-sm relative overflow-hidden transition hover:shadow-md">
+                    <div class="absolute right-0 top-0 w-16 h-16 bg-blue-50 rounded-full -mr-4 -mt-4 opacity-70"></div>
+                    <div class="text-xs font-bold text-blue-700 uppercase tracking-wider flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> Passagem de Vendas
+                    </div>
+                    <div class="flex items-baseline gap-2 mt-2">
+                        <div class="text-4xl font-extrabold text-blue-700" id="kpi-vendas-coletadas">38</div>
+                        <div class="text-xs text-blue-600 font-bold" id="kpi-vendas-pendentes">/ 306 pendentes</div>
+                    </div>
+                    <!-- Barra de progresso para evitar erro no script -->
+                    <div class="w-full bg-slate-100 rounded-full h-1.5 mt-2 overflow-hidden">
+                        <div id="kpi-vendas-bar" class="bg-blue-600 h-1.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                    <p class="text-xs text-blue-700 font-semibold mt-1">Apenas 11% preenchidos</p>
+                </div>
+
+                <!-- Card 4: Gargalo WhatsApp Hub -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-violet-200 shadow-sm relative overflow-hidden transition hover:shadow-md">
+                    <div class="absolute right-0 top-0 w-16 h-16 bg-violet-50 rounded-full -mr-4 -mt-4 opacity-70"></div>
+                    <div class="text-xs font-bold text-violet-700 uppercase tracking-wider flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 bg-violet-600 rounded-full"></span> Chats Pendentes Hub
+                    </div>
+                    <div class="flex items-baseline gap-2 mt-2">
+                        <div class="text-4xl font-extrabold text-violet-700" id="kpi-hub-open">44</div>
+                        <div class="text-xs text-violet-600 font-bold" id="kpi-hub-unassigned">/ 22 sem dono</div>
+                    </div>
+                    <p class="text-xs text-violet-700 font-semibold mt-1">Acúmulo de conversas em aberto</p>
+                </div>
+
+                <!-- Card 5: Total Carteira Ativa -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden transition hover:shadow-md">
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total sob Gestão</div>
+                    <div class="text-4xl font-extrabold text-slate-900 mt-2" id="kpi-total-clientes">344</div>
+                    <p class="text-xs text-slate-500 mt-1">Clientes totais mapeados</p>
+                </div>
+            </section>
+
+            <!-- ================= CORPO PRINCIPAL DE APRESENTAÇÃO DA EQUIPE ================= -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Coluna da Esquerda (2/3 da largura): Playbook de Churn e Diagnóstico -->
+                <div class="lg:col-span-2 space-y-8">
+                    
+                    <!-- Panorama Geral do Líder -->
+                    <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="p-2 bg-indigo-50 text-indigo-600 rounded-xl">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </span>
+                            <h2 class="text-lg font-bold text-slate-900">Visão Geral da Liderança</h2>
+                        </div>
+                        <p class="text-slate-700 leading-relaxed text-sm md:text-base border-l-4 border-indigo-500 pl-4 bg-indigo-50/20 py-3.5 rounded-r-xl" id="dash-panorama-text">
+                            <!-- Atualizado via JS -->
+                        </p>
+                    </div>
+
+                    <!-- PLAYBOOK DA EQUIPE: COMO EVITAR OS CANCELAMENTOS -->
+                    <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+                        <div class="flex items-center justify-between mb-5">
+                            <div class="flex items-center gap-3">
+                                <span class="p-2 bg-rose-50 text-rose-600 rounded-xl">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                                </span>
+                                <div>
+                                    <h2 class="text-lg font-bold text-slate-900">Estudo de Casos: Como Evitar Novos Cancelamentos?</h2>
+                                    <p class="text-xs text-slate-500">Mapeamento direto de motivos de churn reais desta semana vs. soluções proativas</p>
+                                </div>
+                            </div>
+                            <span class="text-xs font-bold bg-rose-50 text-rose-700 px-3 py-1 rounded-full">Prevenção e Foco</span>
+                        </div>
+
+                        <!-- Grid de Causas e Soluções -->
+                        <div class="space-y-4">
+                            <!-- Motivo A -->
+                            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 transition hover:border-orange-200 hover:bg-orange-50/10">
+                                <div class="flex items-start gap-4">
+                                    <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-sm">01</span>
+                                    <div class="space-y-1 w-full">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Causa de Cancelamento (2x)</span>
+                                            <span class="text-xs font-bold text-orange-600">Alinhamento de Expectativas</span>
+                                        </div>
+                                        <h4 class="text-sm font-extrabold text-slate-800">Falta de alinhamento de expectativas inicial</h4>
+                                        <p class="text-xs text-slate-600 leading-relaxed mt-1.5">
+                                            <strong class="text-indigo-600">O que a equipe deve fazer:</strong> Estabelecer na reunião de Kick-off as metas explícitas de sucesso para os primeiros 30 dias. Nunca prometer funcionalidades que ainda não estejam em produção sem alinhar previamente com a equipe de Produto.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Motivo B (Foco WhatsApp Hub) -->
+                            <div class="p-4 rounded-2xl bg-violet-50/30 border-2 border-violet-100 shadow-sm transition hover:border-violet-300">
+                                <div class="flex items-start gap-4">
+                                    <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-violet-100 text-violet-600 flex items-center justify-center font-bold text-sm">02</span>
+                                    <div class="space-y-1 w-full">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Causa de Cancelamento (2x)</span>
+                                            <span class="text-xs font-bold text-violet-600">Perceção de Abandono</span>
+                                        </div>
+                                        <h4 class="text-sm font-extrabold text-slate-800">"Não me senti acompanhado" pelo Customer Success</h4>
+                                        <p class="text-xs text-slate-600 leading-relaxed mt-1.5">
+                                            <strong class="text-indigo-600">O que a equipe deve fazer:</strong> Atribuição imediata de donos para chats e monitorização constante dos canais. Terminar a semana com <span class="font-bold text-rose-600">22 clientes sem atribuição</span> e <span class="font-bold text-rose-600">44 conversas abertas</span> no Hub alimenta diretamente esse sentimento de esquecimento. O cliente em onboarding deve receber um contato proativo pelo menos a cada 7 dias.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Motivo C -->
+                            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 transition hover:border-blue-200 hover:bg-blue-50/10">
+                                <div class="flex items-start gap-4">
+                                    <span class="flex-shrink-0 w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm">03</span>
+                                    <div class="space-y-1 w-full">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Causa de Cancelamento (1x)</span>
+                                            <span class="text-xs font-bold text-blue-600">Desalinhamento de Produto</span>
+                                        </div>
+                                        <h4 class="text-sm font-extrabold text-slate-800">"O produto não era o que eu esperava"</h4>
+                                        <p class="text-xs text-slate-600 leading-relaxed mt-1.5">
+                                            <strong class="text-indigo-600">O que a equipe deve fazer:</strong> Realizar o estudo prévio da ficha de vendas recebida de Vendas antes de iniciar o onboarding do cliente. Se o cliente tiver expectativas erradas sobre a ferramenta, é crucial alinhar a realidade imediatamente no dia 1 de contato.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coluna da Direita (1/3 da largura): Contexto dos dados, vitórias e melhorias -->
+                <div class="space-y-8">
+                    
+                    <!-- Bloco de Informação: Contexto Importante de Coleta & Agenda (Atualizado com o Workshop) -->
+                    <div class="bg-slate-900 text-white p-6 rounded-3xl border border-slate-950 shadow-sm relative overflow-hidden animate-fade-in">
+                        <div class="absolute right-0 top-0 translate-x-4 -translate-y-4 text-indigo-500 opacity-20">
+                            <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+                        </div>
+                        <h4 class="font-bold text-indigo-300 text-sm flex items-center gap-2 mb-3">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Transparência, Contexto &amp; Agenda
+                        </h4>
+                        <div class="space-y-3 text-xs text-slate-300 leading-relaxed">
+                            <p>Para uma avaliação realista e justa do trabalho de todos, devemos considerar as seguintes condições de coleta:</p>
+                            
+                            <div class="border-l-2 border-indigo-500/50 pl-3 space-y-1">
+                                <strong class="text-white block">📅 Hub de WhatsApp (Domingo à Noite)</strong>
+                                <p>Os dados do Hub foram coletados no domingo à noite, pelo que parte dos clientes sem atribuição é fluxo do fim de semana.</p>
+                            </div>
+                            
+                            <div class="border-l-2 border-indigo-500/50 pl-3 space-y-1">
+                                <strong class="text-white block">🕒 Fichas de Vendas (Sexta às 16h)</strong>
+                                <p>O disparo para preenchimento foi na sexta às 16:00. Como o expediente encerra às 16:30, restaram apenas 30 minutos hábeis.</p>
+                            </div>
+
+                            <div class="border-l-2 border-emerald-500/50 pl-3 pt-1 space-y-1 bg-emerald-950/20 p-2 rounded-r-lg">
+                                <strong class="text-emerald-300 block flex items-center gap-1">
+                                    📅 Agenda de Eventos Futuros
+                                </strong>
+                                <p class="text-xs text-slate-200">
+                                    <strong class="text-white">16/07 (Quinta-feira):</strong> Workshop de Lojas Lucrativas em Piracicaba. <span class="text-slate-400 italic">(Mapeamento de logística e convites em planejamento)</span>.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- O que já fizemos (Sucessos) -->
+                    <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="p-2 bg-emerald-50 text-emerald-600 rounded-xl">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </span>
+                            <h2 class="text-base font-extrabold text-slate-900">O que já fizemos (Vitórias)</h2>
+                        </div>
+                        <ul id="dash-vitorias-list" class="space-y-3.5">
+                            <!-- Dinâmico -->
+                        </ul>
+                    </div>
+
+                    <!-- Onde precisamos de melhorar (Lacunas) -->
+                    <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="p-2 bg-rose-50 text-rose-600 rounded-xl">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                            </span>
+                            <h2 class="text-base font-extrabold text-slate-900">Onde precisamos de Melhorar</h2>
+                        </div>
+                        <ul id="dash-atencoes-list" class="space-y-3.5">
+                            <!-- Dinâmico -->
+                        </ul>
+                    </div>
+
+                    <!-- Próximos Passos (Ações Rápidas) -->
+                    <div class="bg-indigo-900 text-white p-6 rounded-3xl border border-indigo-950 shadow-lg">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <span class="p-2 bg-indigo-800 text-indigo-300 rounded-xl">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.907c.961 0 1.36 1.233.578 1.816l-3.97 2.88a1 1 0 00-.364 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.97-2.88a1 1 0 00-1.176 0l-3.97 2.88c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.364-1.118l-3.97-2.88c-.783-.57-.384-1.816.578-1.816h4.907a1 1 0 00.95-.69l1.519-4.674z"></path></svg>
+                                </span>
+                                <h2 class="text-base font-extrabold">Plano de Voo da Semana</h2>
+                            </div>
+                        </div>
+                        <ul id="dash-planos-list" class="space-y-3">
+                            <!-- Dinâmico -->
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ================= SISTEMA JAVASCRIPT ================= -->
+    <script>
+        // Estado Inicial de Dados com dados da Semana 1 de Julho e Hub de WhatsApp com contexto temporal e foco na Carpago
+        let state = {
+            totalClientes: 344,
+            clientesClassificados: 288,
+            vendasJunho: 38,
+            churn: 3,
+            hubUnassigned: 22,
+            hubOpen: 44,
+            panorama: "Iniciamos Julho com um alinhamento estratégico indispensável e um marco histórico para a Auto Avaliar: na sexta-feira, dia 10/07, teremos o lançamento oficial da Carpago! Identificamos 3 cancelamentos operacionais devido a lacunas na jornada inicial (onboarding) que precisamos estancar urgentemente, ao mesmo tempo que preparamos e direcionamos a nossa base de clientes para esta nova oportunidade de crédito que vai transformar a reposição de estoque.",
+            vitorias: [
+                "Coleta estruturada das primeiras 38 fichas completas de vendas de junho.",
+                "Mapeamento ativo da carteira de CS, com 288 clientes já acompanhados com temperatura de saúde atribuída."
+            ],
+            atencoes: [
+                "META CRÍTICA CARPAGO: Engajar e colocar 80 clientes da nossa base ativa de CS no programa oficial de crédito Carpago até sexta-feira (10/07).",
+                "Total de 56 clientes ativos na base ainda estão sem temperatura de relacionamento atribuída (pontos cegos de risco).",
+                "Falta coletar 306 fichas de vendas de junho de forma a garantir a segurança do processo de passagem de bastão comercial.",
+                "Temos 22 clientes sem atribuição de dono no Hub, gerando 44 conversas acumuladas no fim de semana."
+            ],
+            planos: [
+                "⭐ [AÇÃO PRINCIPAL] Colocar e ativar 80 clientes da nossa base no lançamento oficial da Carpago (Programa de Crédito Auto Avaliar) até sexta-feira (10/07).",
+                "Zerar a fila de 44 conversas em aberto e distribuir os 22 clientes sem atribuição no Hub de WhatsApp até amanhã.",
+                "Identificar as 56 contas sem temperatura e atribuir o status de saúde prioritariamente até 4ª feira.",
+                "Acelerar o preenchimento das 306 fichas de transição de vendas pendentes com a equipe comercial."
+            ]
+        };
+
+        const inputs = {
+            totalClientes: document.getElementById('input-total-clientes'),
+            clientesClassificados: document.getElementById('input-clientes-classificados'),
+            vendasJunho: document.getElementById('input-vendas-junho'),
+            churn: document.getElementById('input-churn'),
+            hubUnassigned: document.getElementById('input-hub-unassigned'),
+            hubOpen: document.getElementById('input-hub-open'),
+            panorama: document.getElementById('input-panorama'),
+            vitoria: document.getElementById('input-vitoria'),
+            atencao: document.getElementById('input-atencao'),
+            plano: document.getElementById('input-plano')
+        };
+
+        function toggleEditor() {
+            const panel = document.getElementById('editor-panel');
+            panel.classList.toggle('hidden');
+        }
+
+        window.onload = function() {
+            loadFromStateInputs();
+            renderDashboard();
+            setupEventListeners();
+        };
+
+        function loadFromStateInputs() {
+            inputs.totalClientes.value = state.totalClientes;
+            inputs.clientesClassificados.value = state.clientesClassificados;
+            inputs.vendasJunho.value = state.vendasJunho;
+            inputs.churn.value = state.churn;
+            inputs.hubUnassigned.value = state.hubUnassigned;
+            inputs.hubOpen.value = state.hubOpen;
+            inputs.panorama.value = state.panorama;
+        }
+
+        function setupEventListeners() {
+            inputs.totalClientes.addEventListener('input', (e) => { state.totalClientes = parseInt(e.target.value) || 0; renderDashboard(); });
+            inputs.clientesClassificados.addEventListener('input', (e) => { state.clientesClassificados = parseInt(e.target.value) || 0; renderDashboard(); });
+            inputs.vendasJunho.addEventListener('input', (e) => { state.vendasJunho = parseInt(e.target.value) || 0; renderDashboard(); });
+            inputs.churn.addEventListener('input', (e) => { state.churn = parseInt(e.target.value) || 0; renderDashboard(); });
+            inputs.hubUnassigned.addEventListener('input', (e) => { state.hubUnassigned = parseInt(e.target.value) || 0; renderDashboard(); });
+            inputs.hubOpen.addEventListener('input', (e) => { state.hubOpen = parseInt(e.target.value) || 0; renderDashboard(); });
+            inputs.panorama.addEventListener('input', (e) => { state.panorama = e.target.value; renderDashboard(); });
+        }
+
+        function renderDashboard() {
+            // Atualizar KPIs superiores
+            document.getElementById('kpi-total-clientes').innerText = state.totalClientes;
+            document.getElementById('kpi-churn').innerText = state.churn;
+
+            // Clientes sem classificação
+            const semSaude = Math.max(0, state.totalClientes - state.clientesClassificados);
+            document.getElementById('kpi-sem-saude').innerText = semSaude;
+            const saudePercent = state.totalClientes > 0 ? ((state.clientesClassificados / state.totalClientes) * 100).toFixed(1) : 0;
+            document.getElementById('kpi-saude-percent').innerText = `(${saudePercent}% classificados)`;
+            
+            // Verificação de segurança para a barra de progresso de saúde
+            const saudeBar = document.getElementById('kpi-saude-bar');
+            if (saudeBar) {
+                saudeBar.style.width = `${saudePercent}%`;
+            }
+
+            // Alerta personalizado de saúde
+            const saudeAlertEl = document.getElementById('kpi-saude-alert');
+            if (semSaude > 0) {
+                saudeAlertEl.innerText = `🚨 Alerta: ${semSaude} pontos cegos sem etiqueta!`;
+                saudeAlertEl.className = "text-xs text-amber-700 font-bold mt-1.5 animate-pulse";
+            } else {
+                saudeAlertEl.innerText = "Excelente: 100% dos clientes monitorizados!";
+                saudeAlertEl.className = "text-xs text-emerald-700 font-bold mt-1.5";
+            }
+
+            // Fichas coletadas vs pendentes
+            document.getElementById('kpi-vendas-coletadas').innerText = state.vendasJunho;
+            const pendentesVendas = Math.max(0, state.totalClientes - state.vendasJunho);
+            document.getElementById('kpi-vendas-pendentes').innerText = `/ ${pendentesVendas} pendentes`;
+            const vendasPercent = state.totalClientes > 0 ? ((state.vendasJunho / state.totalClientes) * 100).toFixed(1) : 0;
+            
+            // Verificação de segurança para a barra de progresso de vendas
+            const vendasBar = document.getElementById('kpi-vendas-bar');
+            if (vendasBar) {
+                vendasBar.style.width = `${vendasPercent}%`;
+            }
+
+            // Hub de WhatsApp KPIs
+            document.getElementById('kpi-hub-open').innerText = state.hubOpen;
+            document.getElementById('kpi-hub-unassigned').innerText = `/ ${state.hubUnassigned} sem dono`;
+
+            // Panorama de texto
+            document.getElementById('dash-panorama-text').innerText = state.panorama;
+
+            // Renderização de listas de apresentação
+            renderPresenterList('vitorias', 'dash-vitorias-list', 'emerald');
+            renderPresenterList('atencoes', 'dash-atencoes-list', 'rose');
+            renderPresenterPlanosList();
+
+            // Renderizar inputs do editor
+            renderEditorLists();
+        }
+
+        // Renderiza listas na coluna direita do dashboard
+        function renderPresenterList(key, targetId, color) {
+            const listElement = document.getElementById(targetId);
+            listElement.innerHTML = '';
+
+            if (state[key].length === 0) {
+                listElement.innerHTML = `<li class="text-xs text-slate-400 italic">Sem itens adicionados.</li>`;
+                return;
+            }
+
+            state[key].forEach(item => {
+                const li = document.createElement('li');
+                li.className = "flex gap-2.5 text-xs md:text-sm text-slate-600 align-top leading-snug";
+                
+                let iconColor = color === 'emerald' ? 'text-emerald-500' : 'text-rose-500';
+                let iconSvg = color === 'emerald' 
+                    ? `<svg class="w-5 h-5 flex-shrink-0 ${iconColor} mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>`
+                    : `<svg class="w-5 h-5 flex-shrink-0 ${iconColor} mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>`;
+
+                li.innerHTML = `
+                    ${iconSvg}
+                    <span>${item}</span>
+                `;
+                listElement.appendChild(li);
+            });
+        }
+
+        function renderPresenterPlanosList() {
+            const listElement = document.getElementById('dash-planos-list');
+            listElement.innerHTML = '';
+
+            if (state.planos.length === 0) {
+                listElement.innerHTML = `<li class="text-xs text-indigo-200 italic">Sem ações necessárias definidas.</li>`;
+                return;
+            }
+
+            state.planos.forEach((plano, index) => {
+                const li = document.createElement('li');
+                // Destaca visualmente a ação principal se ela contiver Carpago ou for o primeiro item
+                const isHighlight = plano.includes('Carpago') || index === 0;
+                li.className = `flex items-start gap-2.5 p-2.5 rounded-xl border ${
+                    isHighlight 
+                    ? 'bg-amber-500/20 border-amber-500/40 text-amber-200' 
+                    : 'bg-indigo-950/50 border-indigo-800/50 text-indigo-100'
+                }`;
+                li.innerHTML = `
+                    <span class="flex-shrink-0 w-5 h-5 bg-indigo-500 text-white rounded-full flex items-center justify-center text-[10px] font-extrabold mt-0.5">
+                        ${index + 1}
+                    </span>
+                    <div class="text-xs font-semibold">${plano}</div>
+                `;
+                listElement.appendChild(li);
+            });
+        }
+
+        function renderEditorLists() {
+            renderEditorEditableList('vitorias', 'editor-vitorias-list');
+            renderEditorEditableList('atencoes', 'editor-atencoes-list');
+            renderEditorEditableList('planos', 'editor-planos-list');
+        }
+
+        function renderEditorEditableList(key, elementId) {
+            const list = document.getElementById(elementId);
+            list.innerHTML = '';
+            state[key].forEach((item, index) => {
+                const li = document.createElement('li');
+                li.className = "flex items-center justify-between gap-2 p-1.5 bg-slate-50 border border-slate-100 rounded-lg text-xs";
+                li.innerHTML = `
+                    <span class="truncate text-slate-600 max-w-[200px]">${item}</span>
+                    <button onclick="removeListItem('${key}', ${index})" class="text-slate-400 hover:text-rose-600 font-bold px-1.5 focus:outline-none">&times;</button>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        function addListItem(key) {
+            let inputEl;
+            if (key === 'vitorias') inputEl = inputs.vitoria;
+            else if (key === 'atencoes') inputEl = inputs.atencao;
+            else if (key === 'planos') inputEl = inputs.plano;
+
+            const val = inputEl.value.trim();
+            if (val) {
+                state[key].push(val);
+                inputEl.value = '';
+                renderDashboard();
+            }
+        }
+
+        function removeListItem(key, index) {
+            state[key].splice(index, 1);
+            renderDashboard();
+        }
+
+        // Toast de Notificação
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.innerText = message;
+            
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Cópia para o clipboard com formatação
+        function copyToClipboardText() {
+            const saudePercent = state.totalClientes > 0 ? ((state.clientesClassificados / state.totalClientes) * 100).toFixed(1) : 0;
+            const vendasPercent = state.totalClientes > 0 ? ((state.vendasJunho / state.totalClientes) * 100).toFixed(1) : 0;
+            const semClassificacao = state.totalClientes - state.clientesClassificados;
+            const pendentesVendas = state.totalClientes - state.vendasJunho;
+
+            let report = `📊 *ALINHAMENTO DE PERFORMANCE CS - SEMANA 1 DE JULHO*\n\n`;
+            report += `🚀 *MARCO DA SEMANA: LANÇAMENTO CARPAGO (10/07)*\n`;
+            report += `• Objetivo: Ativar 80 clientes da base no novo programa de crédito de reposição de estoque de veículos da Auto Avaliar!\n\n`;
+            
+            report += `📅 *AGENDA DE EVENTOS & PLANEJAMENTO:*\n`;
+            report += `• 10/07 (Sexta-feira): Lançamento Carpago (Foco Principal: 80 clientes)\n`;
+            report += `• 16/07 (Quinta-feira): Workshop de Lojas Lucrativas em Piracicaba (Planejamento futuro)\n\n`;
+
+            report += `*MÉTRICAS DO NOSSO TABULEIRO DE OPERAÇÃO:*\n`;
+            report += `• Clientes Ativos na Base: *${state.totalClientes}*\n`;
+            report += `• Saúde Mapeada: *${saudePercent}%* (${state.clientesClassificados} classificados / *${semClassificacao} pendentes de temperatura!*)\n`;
+            report += `• Fichas de Transição de Vendas Coletadas: *${state.vendasJunho}* (Falta preencher *${pendentesVendas} fichas de passagem!*)\n`;
+            report += `  _Nota: O disparo de coleta foi feito na sexta às 16h00, com o expediente encerrando às 16h30._\n`;
+            report += `• WhatsApp Hub: *${state.hubOpen} conversas em aberto* e *${state.hubUnassigned} clientes sem dono atribuído*\n`;
+            report += `  _Nota: Dados coletados domingo à noite, englobando o fluxo acumulado do fim de semana._\n`;
+            report += `• Cancelamentos (Churn): *${state.churn}* clientes\n\n`;
+
+            report += `💡 *ANÁLISE DE CHURN (PORQUE E COMO EVITAR?)*\n`;
+            report += `1. *Falta de alinhamento de expectativas (2 cancelamentos)*\n`;
+            report += `   _Como a equipe evita:_ Definir na Kick-off do cliente o que será entregue nos primeiros 30 dias de integração.\n`;
+            report += `2. *Não me senti acompanhado (2 cancelamentos)*\n`;
+            report += `   _Como a equipe evita:_ Contatos proativos rápidos e atribuição ágil no WhatsApp Hub para mitigar o gargalo de ${state.hubOpen} chats acumulados no fim de semana.\n`;
+            report += `3. *O produto não era o que eu esperava (1 cancelamento)*\n`;
+            report += `   _Como a equipe evita:_ Analisar e estudar a ficha de passagem de vendas de junho antes do primeiro contato operacional.\n\n`;
+
+            report += `🚀 *NOSSAS CONQUISTAS DA SEMANA:*\n`;
+            state.vitorias.forEach(v => report += `✔️ ${v}\n`);
+            report += `\n`;
+
+            report += `⚠️ *FOCOS DE ATENÇÃO DA EQUIPE:*\n`;
+            state.atencoes.forEach(a => report += `🚨 ${a}\n`);
+            report += `\n`;
+
+            report += `✈️ *PRÓXIMAS AÇÕES (PLANEAMENTO SEMANAL):*\n`;
+            state.planos.forEach((p, i) => report += ` ${i+1}. ${p}\n`);
+
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = report;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showToast("Relatório de Alinhamento copiado com sucesso!");
+                }
+            } catch (err) {
+                showToast("Falha ao copiar dados.");
+            }
+            
+            document.body.removeChild(tempTextArea);
+        }
+    </script>
+</body>
+</html>
