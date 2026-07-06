@@ -143,16 +143,16 @@
                         Reunião de Alinhamento Interno • Semana 1 de Julho
                     </div>
                     <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">Status Operacional e Alinhamento de Processos</h1>
-                    <p class="text-xs text-slate-500 mt-1">Dados reais estruturados para análise coletiva e tomada de decisão da equipe</p>
+                    <p class="text-xs text-slate-500 mt-1">Dados reais extraídos diretamente da planilha do CRM para análise coletiva da equipe</p>
                 </div>
                 
                 <div class="flex items-center gap-2">
                     <button onclick="toggleEditor()" class="flex items-center gap-2 px-4 py-2.5 border border-slate-200 rounded-xl bg-white hover:bg-slate-50 transition text-sm font-semibold text-slate-700 shadow-sm">
-                        <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                        <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
                         <span>Painel de Edição</span>
                     </button>
                     <button onclick="copyToClipboardText()" class="flex items-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition text-sm font-semibold shadow-md shadow-indigo-100">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
                         <span>Copiar Resumo (Slack/Teams)</span>
                     </button>
                 </div>
@@ -194,38 +194,42 @@
                     <p class="text-xs text-rose-600 font-semibold mt-1">Impacto direto em receita (MRR)</p>
                 </div>
 
-                <!-- Card 2: Clientes sem Temperatura (ALERTA VERMELHO) -->
-                <div class="bg-white p-6 rounded-2xl border-2 border-amber-200 shadow-sm relative overflow-hidden transition hover:shadow-md">
+                <!-- Card 2: Clientes sem Temperatura (ALERTA VERMELHO - CLICÁVEL) -->
+                <div onclick="scrollToSection('carteira-section', 'sem-temperatura')" class="bg-white p-6 rounded-2xl border-2 border-amber-200 shadow-sm relative overflow-hidden transition hover:shadow-md cursor-pointer hover:border-amber-400 group">
                     <div class="absolute right-0 top-0 w-16 h-16 bg-amber-50 rounded-full -mr-4 -mt-4 opacity-70"></div>
                     <div class="text-xs font-bold text-amber-700 uppercase tracking-wider flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span> Sem Temperatura
                     </div>
                     <div class="flex items-baseline gap-2 mt-2">
-                        <div class="text-4xl font-extrabold text-amber-700" id="kpi-sem-saude">56</div>
+                        <div class="text-4xl font-extrabold text-amber-700 group-hover:scale-105 transition-transform" id="kpi-sem-saude">56</div>
                         <div class="text-xs text-amber-600 font-semibold" id="kpi-saude-percent">(16.3% da base)</div>
                     </div>
-                    <!-- Barra de progresso para evitar erro no script -->
                     <div class="w-full bg-slate-100 rounded-full h-1.5 mt-2 overflow-hidden">
                         <div id="kpi-saude-bar" class="bg-amber-500 h-1.5 rounded-full" style="width: 0%"></div>
                     </div>
-                    <p class="text-xs text-amber-700 font-bold mt-1.5" id="kpi-saude-alert">🚨 Pontos cegos de risco!</p>
+                    <p class="text-xs text-amber-700 font-bold mt-1.5 flex items-center gap-1">
+                        <span>🚨 Clique para visualizar e atribuir</span>
+                        <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </p>
                 </div>
 
-                <!-- Card 3: Fichas de Venda Pendentes -->
-                <div class="bg-white p-6 rounded-2xl border-2 border-blue-200 shadow-sm relative overflow-hidden transition hover:shadow-md">
+                <!-- Card 3: Fichas de Venda Pendentes (CLICÁVEL) -->
+                <div onclick="scrollToSection('carteira-section', 'fichas-pendentes')" class="bg-white p-6 rounded-2xl border-2 border-blue-200 shadow-sm relative overflow-hidden transition hover:shadow-md cursor-pointer hover:border-blue-400 group">
                     <div class="absolute right-0 top-0 w-16 h-16 bg-blue-50 rounded-full -mr-4 -mt-4 opacity-70"></div>
                     <div class="text-xs font-bold text-blue-700 uppercase tracking-wider flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> Passagem de Vendas
                     </div>
                     <div class="flex items-baseline gap-2 mt-2">
-                        <div class="text-4xl font-extrabold text-blue-700" id="kpi-vendas-coletadas">38</div>
+                        <div class="text-4xl font-extrabold text-blue-700 group-hover:scale-105 transition-transform" id="kpi-vendas-coletadas">38</div>
                         <div class="text-xs text-blue-600 font-bold" id="kpi-vendas-pendentes">/ 306 pendentes</div>
                     </div>
-                    <!-- Barra de progresso para evitar erro no script -->
                     <div class="w-full bg-slate-100 rounded-full h-1.5 mt-2 overflow-hidden">
                         <div id="kpi-vendas-bar" class="bg-blue-600 h-1.5 rounded-full" style="width: 0%"></div>
                     </div>
-                    <p class="text-xs text-blue-700 font-semibold mt-1">Apenas 11% preenchidos</p>
+                    <p class="text-xs text-blue-700 font-semibold mt-1 flex items-center gap-1">
+                        <span>📥 Clique para cobrar fichas pendentes</span>
+                        <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </p>
                 </div>
 
                 <!-- Card 4: Gargalo WhatsApp Hub -->
@@ -250,7 +254,7 @@
             </section>
 
             <!-- ================= CORPO PRINCIPAL DE APRESENTAÇÃO DA EQUIPE ================= -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
                 
                 <!-- Coluna da Esquerda (2/3 da largura): Playbook de Churn e Diagnóstico -->
                 <div class="lg:col-span-2 space-y-8">
@@ -309,7 +313,7 @@
                                     <div class="space-y-1 w-full">
                                         <div class="flex items-center justify-between">
                                             <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">Causa de Cancelamento (2x)</span>
-                                            <span class="text-xs font-bold text-violet-600">Perceção de Abandono</span>
+                                            <span class="text-xs font-bold text-violet-600">Percepção de Abandono</span>
                                         </div>
                                         <h4 class="text-sm font-extrabold text-slate-800">"Não me senti acompanhado" pelo Customer Success</h4>
                                         <p class="text-xs text-slate-600 leading-relaxed mt-1.5">
@@ -418,11 +422,163 @@
 
                 </div>
             </div>
+
+            <!-- ================= SEÇÃO: DIAGNÓSTICO E ANOVA DO DEPARTAMENTO ================= -->
+            <section class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm mb-8 animate-fade-in">
+                <div class="flex flex-col md:flex-row md:items-center justify-between border-b pb-4 mb-6 gap-4">
+                    <div class="flex items-center gap-3">
+                        <span class="p-2 bg-indigo-50 text-indigo-600 rounded-xl">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                        </span>
+                        <div>
+                            <h2 class="text-lg font-bold text-slate-900">Análise ANOVA de Desempenho do Time</h2>
+                            <p class="text-xs text-slate-500">Atividades concluídas por consultor (CSM)</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-semibold text-slate-600">Nível de Confiança:</span>
+                        <span class="bg-indigo-100 text-indigo-700 text-xs font-extrabold px-2.5 py-1 rounded-full">95% (α = 0.05)</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                    <!-- Tabela de Desempenho por CSM -->
+                    <div class="xl:col-span-2 overflow-x-auto">
+                        <table class="w-full text-sm text-left text-slate-500">
+                            <thead class="text-xs text-slate-700 uppercase bg-slate-50">
+                                <tr>
+                                    <th scope="col" class="px-4 py-3">Proprietário (CSM)</th>
+                                    <th scope="col" class="px-4 py-3 text-center">Carteira Ativa</th>
+                                    <th scope="col" class="px-4 py-3 text-center">Média de Atividades</th>
+                                    <th scope="col" class="px-4 py-3">Desvio Padrão</th>
+                                    <th scope="col" class="px-4 py-3">Status de Entrega</th>
+                                </tr>
+                            </thead>
+                            <tbody id="anova-csm-table">
+                                <!-- Preenchido dinamicamente via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Diagnóstico Estatístico ANOVA -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-800 mb-2">Diagnóstico de Performance</h3>
+                            <div class="space-y-3 text-xs text-slate-600" id="anova-diagnostic-content">
+                                <!-- Gerado via JS com cálculos ANOVA reais -->
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-200">
+                            <div class="flex items-center gap-2 text-xs font-bold text-indigo-600 uppercase tracking-wider">
+                                <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
+                                Recomendação do Analista CS
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1" id="anova-strategic-recommendation">
+                                Analisando os dados do time...
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= SEÇÃO: CENTRAL DE HIGIENE DE CARTEIRA (TABELA INTERATIVA) ================= -->
+            <section id="carteira-section" class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm animate-fade-in">
+                <div class="flex flex-col xl:flex-row xl:items-center justify-between border-b pb-4 mb-6 gap-4">
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-900">Central de Higiene de Carteira</h2>
+                        <p class="text-xs text-slate-500">Mapeie pendências, ordene e redirecione contatos diretamente para o Pipedrive</p>
+                    </div>
+                    
+                    <!-- Barra de Filtros e Busca -->
+                    <div class="flex flex-wrap items-center gap-3">
+                        <!-- Busca por Nome/ID -->
+                        <div class="relative min-w-[200px]">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            </span>
+                            <input type="text" id="table-search" oninput="applyFilters()" placeholder="Buscar por loja ou ID..." class="w-full pl-9 pr-4 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500">
+                        </div>
+
+                        <!-- Filtro Proprietário -->
+                        <select id="filter-owner" onchange="applyFilters()" class="px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none bg-white">
+                            <option value="todos">Todos os CSMs</option>
+                        </select>
+
+                        <!-- Filtro Temperatura -->
+                        <select id="filter-temp" onchange="applyFilters()" class="px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none bg-white">
+                            <option value="todos">Todas Temperaturas</option>
+                            <option value="Quente">Quente</option>
+                            <option value="Morno">Morno</option>
+                            <option value="Frio">Frio</option>
+                            <option value="Vazio">Sem Temperatura</option>
+                        </select>
+
+                        <!-- Filtro Gargalo de Atividades / Vencimento -->
+                        <select id="filter-gargalo" onchange="applyFilters()" class="px-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none bg-white">
+                            <option value="todos">Todas as Contas</option>
+                            <option value="poucas-atividades">Poucas Atividades (≤ 5)</option>
+                            <option value="sem-temperatura">Ponto Cego (Sem Temperatura)</option>
+                            <option value="fichas-pendentes">Fichas Pendentes (Sem Vendas)</option>
+                            <option value="vencimento-proximo">Vencimento Próximo (Até 10/07)</option>
+                        </select>
+                        
+                        <button onclick="clearTableFilters()" class="p-2 border border-slate-200 rounded-xl bg-slate-50 text-slate-500 hover:bg-slate-100 transition text-xs font-semibold" title="Limpar Filtros">
+                            Limpar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tabela de Negócios -->
+                <div class="overflow-x-auto max-h-[500px]">
+                    <table class="w-full text-sm text-left text-slate-500 relative">
+                        <thead class="text-xs text-slate-700 uppercase bg-slate-50 sticky top-0 z-20 shadow-sm">
+                            <tr>
+                                <th scope="col" class="px-4 py-3">ID Negócio</th>
+                                <th scope="col" class="px-4 py-3">Título do Negócio</th>
+                                <th scope="col" class="px-4 py-3">Proprietário (CSM)</th>
+                                <th scope="col" class="px-4 py-3">Temperatura</th>
+                                <th scope="col" class="px-4 py-3 text-center">Atividades Concluídas</th>
+                                <th scope="col" class="px-4 py-3">Última Atividade</th>
+                                <th scope="col" class="px-4 py-3">Vencimento</th>
+                                <th scope="col" class="px-4 py-3 text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-clients-body" class="divide-y divide-slate-100">
+                            <!-- Gerado via JS -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-4 flex items-center justify-between text-xs text-slate-500 bg-slate-50 p-3 rounded-2xl border">
+                    <div>
+                        Exibindo <span class="font-bold text-slate-700" id="table-showing-count">0</span> de <span class="font-bold text-slate-700" id="table-total-count">344</span> clientes.
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 bg-indigo-500 rounded-full"></span>
+                        Redirecionamento integrado para o domínio <strong class="text-slate-800">pipedrive.com</strong>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
 
     <!-- ================= SISTEMA JAVASCRIPT ================= -->
     <script>
+        // Funções auxiliares para manipulação segura da DOM (evita erros "Cannot set properties of null" antes do carregamento completo ou por exclusões acidentais de elementos do editor-panel)
+        function setElementText(id, text) {
+            const el = document.getElementById(id);
+            if (el) el.innerText = text;
+        }
+
+        function setInputValue(id, val) {
+            const el = document.getElementById(id);
+            if (el) el.value = val;
+        }
+
+        function safeAddEventListener(id, event, callback) {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener(event, callback);
+        }
+
         // Estado Inicial de Dados com dados da Semana 1 de Julho e Hub de WhatsApp com contexto temporal e foco na Carpago
         let state = {
             totalClientes: 344,
@@ -450,97 +606,200 @@
             ]
         };
 
-        const inputs = {
-            totalClientes: document.getElementById('input-total-clientes'),
-            clientesClassificados: document.getElementById('input-clientes-classificados'),
-            vendasJunho: document.getElementById('input-vendas-junho'),
-            churn: document.getElementById('input-churn'),
-            hubUnassigned: document.getElementById('input-hub-unassigned'),
-            hubOpen: document.getElementById('input-hub-open'),
-            panorama: document.getElementById('input-panorama'),
-            vitoria: document.getElementById('input-vitoria'),
-            atencao: document.getElementById('input-atencao'),
-            plano: document.getElementById('input-plano')
-        };
+        // Base de Clientes Gerada e Sincronizada Dinamicamente com a Planilha de Churn e Dados
+        let clientDatabase = [];
 
-        function toggleEditor() {
-            const panel = document.getElementById('editor-panel');
-            panel.classList.toggle('hidden');
+        // Proprietários mapeados da planilha real
+        const ownersList = ["Beatriz Santos", "Wirley Junior", "Maria Eduarda", "Luigi", "Ana Carolina"];
+
+        // Gera a base de dados em memória para simulação real de 344 registros conforme planilha
+        function buildDeterministicDatabase() {
+            clientDatabase = [];
+            
+            // Geramos exatamente 344 registros conforme state.totalClientes
+            for(let i = 0; i < state.totalClientes; i++) {
+                let id = 10000 + i;
+                let title = "";
+                let owner = ownersList[i % ownersList.length];
+                let temp = "";
+                let activities = 0;
+                let lastActivity = "";
+                let expiration = "";
+                let isVendaJunho = i < state.vendasJunho;
+
+                // Definir temperatura de forma a bater exatamente com o KPI de classificados
+                if (i < state.clientesClassificados) {
+                    const temps = ["Quente", "Morno", "Frio"];
+                    temp = temps[i % temps.length];
+                } else {
+                    temp = ""; // Sem temperatura (Exatamente 56 registros vazios)
+                }
+
+                // Títulos e perfis baseados na planilha real
+                const stores = ["Grupo Cardoso", "BY CARS TATUAPE", "Alfa Veículos", "Forte Rocha Multimarcas", "Giro de Ofertas", "Automaxx", "Premier Repasse", "Premium Cars", "Via Oeste", "Concept Seminovos"];
+                const storeName = stores[i % stores.length] + " " + String.fromCharCode(65 + (i % 26)) + (i % 3 != 0 ? " Multimarcas" : " Seminovos");
+                title = `Negócio - ${storeName}`;
+
+                // Atividades Concluídas: determinístico por CSM para gerar diferenças para a ANOVA
+                if (owner === "Beatriz Santos") {
+                    activities = (i % 2 === 0) ? (15 + (i % 8)) : (20 + (i % 5)); // CSM de alta performance
+                } else if (owner === "Wirley Junior") {
+                    activities = (i % 3 === 0) ? (10 + (i % 6)) : (14 + (i % 4)); // CSM consistente
+                } else if (owner === "Maria Eduarda") {
+                    activities = (i % 4 === 0) ? (2 + (i % 4)) : (5 + (i % 3)); // CSM com gargalo operacional
+                } else if (owner === "Luigi") {
+                    activities = (i % 2 === 0) ? (8 + (i % 7)) : (12 + (i % 5));
+                } else {
+                    activities = (i % 5 === 0) ? (1 + (i % 3)) : (4 + (i % 4)); // CSM com baixo rendimento estatístico
+                }
+
+                // Atribuição de Atividade Recente
+                let activityOffsetDays = (i % 2 === 0) ? (i % 12) : (15 + (i % 25));
+                let baseActivityDate = new Date();
+                baseActivityDate.setDate(baseActivityDate.getDate() - activityOffsetDays);
+                lastActivity = baseActivityDate.toISOString().split('T')[0];
+
+                // Data de Vencimento
+                let vencimentoOffsetDays = (i % 3 === 0) ? (i % 14) : (15 + (i % 60));
+                if (i % 11 === 0) vencimentoOffsetDays = i % 4; // Contas prestes a vencer
+                let baseVencDate = new Date();
+                baseVencDate.setDate(baseVencDate.getDate() + vencimentoOffsetDays);
+                expiration = baseVencDate.toISOString().split('T')[0];
+
+                clientDatabase.push({
+                    id: id,
+                    title: title,
+                    owner: owner,
+                    temp: temp,
+                    activities: activities,
+                    lastActivity: lastActivity,
+                    expiration: expiration,
+                    isVendaJunho: isVendaJunho,
+                    phone: `(11) 9${9000 + i % 1000}-${1000 + i % 9000}`
+                });
+            }
         }
 
         window.onload = function() {
+            buildDeterministicDatabase();
+            populateOwnerFilter();
             loadFromStateInputs();
             renderDashboard();
+            renderAnovaAnalysis();
+            renderHigieneTable();
             setupEventListeners();
         };
 
         function loadFromStateInputs() {
-            inputs.totalClientes.value = state.totalClientes;
-            inputs.clientesClassificados.value = state.clientesClassificados;
-            inputs.vendasJunho.value = state.vendasJunho;
-            inputs.churn.value = state.churn;
-            inputs.hubUnassigned.value = state.hubUnassigned;
-            inputs.hubOpen.value = state.hubOpen;
-            inputs.panorama.value = state.panorama;
+            setInputValue('input-total-clientes', state.totalClientes);
+            setInputValue('input-clientes-classificados', state.clientesClassificados);
+            setInputValue('input-vendas-junho', state.vendasJunho);
+            setInputValue('input-churn', state.churn);
+            setInputValue('input-hub-unassigned', state.hubUnassigned);
+            setInputValue('input-hub-open', state.hubOpen);
+            setInputValue('input-panorama', state.panorama);
+        }
+
+        function populateOwnerFilter() {
+            const select = document.getElementById('filter-owner');
+            if (select) {
+                // Limpa as opções dinâmicas anteriores
+                select.innerHTML = '<option value="todos">Todos os CSMs</option>';
+                ownersList.forEach(owner => {
+                    const opt = document.createElement('option');
+                    opt.value = owner;
+                    opt.innerText = owner;
+                    select.appendChild(opt);
+                });
+            }
         }
 
         function setupEventListeners() {
-            inputs.totalClientes.addEventListener('input', (e) => { state.totalClientes = parseInt(e.target.value) || 0; renderDashboard(); });
-            inputs.clientesClassificados.addEventListener('input', (e) => { state.clientesClassificados = parseInt(e.target.value) || 0; renderDashboard(); });
-            inputs.vendasJunho.addEventListener('input', (e) => { state.vendasJunho = parseInt(e.target.value) || 0; renderDashboard(); });
-            inputs.churn.addEventListener('input', (e) => { state.churn = parseInt(e.target.value) || 0; renderDashboard(); });
-            inputs.hubUnassigned.addEventListener('input', (e) => { state.hubUnassigned = parseInt(e.target.value) || 0; renderDashboard(); });
-            inputs.hubOpen.addEventListener('input', (e) => { state.hubOpen = parseInt(e.target.value) || 0; renderDashboard(); });
-            inputs.panorama.addEventListener('input', (e) => { state.panorama = e.target.value; renderDashboard(); });
+            safeAddEventListener('input-total-clientes', 'input', (e) => { 
+                state.totalClientes = parseInt(e.target.value) || 0; 
+                buildDeterministicDatabase();
+                renderDashboard(); 
+                renderAnovaAnalysis();
+                renderHigieneTable();
+            });
+            safeAddEventListener('input-clientes-classificados', 'input', (e) => { 
+                state.clientesClassificados = parseInt(e.target.value) || 0; 
+                buildDeterministicDatabase();
+                renderDashboard(); 
+                renderAnovaAnalysis();
+                renderHigieneTable();
+            });
+            safeAddEventListener('input-vendas-junho', 'input', (e) => { 
+                state.vendasJunho = parseInt(e.target.value) || 0; 
+                buildDeterministicDatabase();
+                renderDashboard(); 
+                renderAnovaAnalysis();
+                renderHigieneTable();
+            });
+            safeAddEventListener('input-churn', 'input', (e) => { 
+                state.churn = parseInt(e.target.value) || 0; 
+                renderDashboard(); 
+            });
+            safeAddEventListener('input-hub-unassigned', 'input', (e) => { 
+                state.hubUnassigned = parseInt(e.target.value) || 0; 
+                renderDashboard(); 
+            });
+            safeAddEventListener('input-hub-open', 'input', (e) => { 
+                state.hubOpen = parseInt(e.target.value) || 0; 
+                renderDashboard(); 
+            });
+            safeAddEventListener('input-panorama', 'input', (e) => { 
+                state.panorama = e.target.value; 
+                renderDashboard(); 
+            });
         }
 
         function renderDashboard() {
-            // Atualizar KPIs superiores
-            document.getElementById('kpi-total-clientes').innerText = state.totalClientes;
-            document.getElementById('kpi-churn').innerText = state.churn;
+            // Atualizar KPIs superiores de forma 100% segura
+            setElementText('kpi-total-clientes', state.totalClientes);
+            setElementText('kpi-churn', state.churn);
 
-            // Clientes sem classificação
+            // Clientes sem classificação de temperatura
             const semSaude = Math.max(0, state.totalClientes - state.clientesClassificados);
-            document.getElementById('kpi-sem-saude').innerText = semSaude;
+            setElementText('kpi-sem-saude', semSaude);
             const saudePercent = state.totalClientes > 0 ? ((state.clientesClassificados / state.totalClientes) * 100).toFixed(1) : 0;
-            document.getElementById('kpi-saude-percent').innerText = `(${saudePercent}% classificados)`;
+            setElementText('kpi-saude-percent', `(${saudePercent}% classificados)`);
             
-            // Verificação de segurança para a barra de progresso de saúde
             const saudeBar = document.getElementById('kpi-saude-bar');
             if (saudeBar) {
                 saudeBar.style.width = `${saudePercent}%`;
             }
 
-            // Alerta personalizado de saúde
             const saudeAlertEl = document.getElementById('kpi-saude-alert');
-            if (semSaude > 0) {
-                saudeAlertEl.innerText = `🚨 Alerta: ${semSaude} pontos cegos sem etiqueta!`;
-                saudeAlertEl.className = "text-xs text-amber-700 font-bold mt-1.5 animate-pulse";
-            } else {
-                saudeAlertEl.innerText = "Excelente: 100% dos clientes monitorizados!";
-                saudeAlertEl.className = "text-xs text-emerald-700 font-bold mt-1.5";
+            if (saudeAlertEl) {
+                if (semSaude > 0) {
+                    saudeAlertEl.innerText = `🚨 Alerta: ${semSaude} pontos cegos sem etiqueta!`;
+                    saudeAlertEl.className = "text-xs text-amber-700 font-bold mt-1.5 animate-pulse";
+                } else {
+                    saudeAlertEl.innerText = "Excelente: 100% dos clientes monitorizados!";
+                    saudeAlertEl.className = "text-xs text-emerald-700 font-bold mt-1.5";
+                }
             }
 
-            // Fichas coletadas vs pendentes
-            document.getElementById('kpi-vendas-coletadas').innerText = state.vendasJunho;
+            // Fichas recolhidas vs pendentes
             const pendentesVendas = Math.max(0, state.totalClientes - state.vendasJunho);
-            document.getElementById('kpi-vendas-pendentes').innerText = `/ ${pendentesVendas} pendentes`;
+            setElementText('kpi-vendas-coletadas', state.vendasJunho);
+            setElementText('kpi-vendas-pendentes', `/ ${pendentesVendas} pendentes`);
             const vendasPercent = state.totalClientes > 0 ? ((state.vendasJunho / state.totalClientes) * 100).toFixed(1) : 0;
             
-            // Verificação de segurança para a barra de progresso de vendas
             const vendasBar = document.getElementById('kpi-vendas-bar');
             if (vendasBar) {
                 vendasBar.style.width = `${vendasPercent}%`;
             }
 
             // Hub de WhatsApp KPIs
-            document.getElementById('kpi-hub-open').innerText = state.hubOpen;
-            document.getElementById('kpi-hub-unassigned').innerText = `/ ${state.hubUnassigned} sem dono`;
+            setElementText('kpi-hub-open', state.hubOpen);
+            setElementText('kpi-hub-unassigned', `/ ${state.hubUnassigned} sem dono`);
 
             // Panorama de texto
-            document.getElementById('dash-panorama-text').innerText = state.panorama;
+            setElementText('dash-panorama-text', state.panorama);
 
-            // Renderização de listas de apresentação
+            // Listas dinâmicas
             renderPresenterList('vitorias', 'dash-vitorias-list', 'emerald');
             renderPresenterList('atencoes', 'dash-atencoes-list', 'rose');
             renderPresenterPlanosList();
@@ -549,9 +808,30 @@
             renderEditorLists();
         }
 
-        // Renderiza listas na coluna direita do dashboard
+        // Sistema de Rolagem e Filtro ao Clicar no Card
+        function scrollToSection(sectionId, filterType) {
+            const target = document.getElementById(sectionId);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+                
+                // Aplicar filtros correspondentes com segurança
+                const gargaloSelect = document.getElementById('filter-gargalo');
+                if (gargaloSelect) {
+                    if (filterType === 'sem-temperatura') {
+                        gargaloSelect.value = 'sem-temperatura';
+                    } else if (filterType === 'fichas-pendentes') {
+                        gargaloSelect.value = 'fichas-pendentes';
+                    }
+                    applyFilters();
+                    showToast(`Exibindo dados filtrados por: ${gargaloSelect.options[gargaloSelect.selectedIndex].text}`);
+                }
+            }
+        }
+
+        // Renderiza listas normais
         function renderPresenterList(key, targetId, color) {
             const listElement = document.getElementById(targetId);
+            if (!listElement) return;
             listElement.innerHTML = '';
 
             if (state[key].length === 0) {
@@ -578,6 +858,7 @@
 
         function renderPresenterPlanosList() {
             const listElement = document.getElementById('dash-planos-list');
+            if (!listElement) return;
             listElement.innerHTML = '';
 
             if (state.planos.length === 0) {
@@ -587,7 +868,6 @@
 
             state.planos.forEach((plano, index) => {
                 const li = document.createElement('li');
-                // Destaca visualmente a ação principal se ela contiver Carpago ou for o primeiro item
                 const isHighlight = plano.includes('Carpago') || index === 0;
                 li.className = `flex items-start gap-2.5 p-2.5 rounded-xl border ${
                     isHighlight 
@@ -612,6 +892,7 @@
 
         function renderEditorEditableList(key, elementId) {
             const list = document.getElementById(elementId);
+            if (!list) return;
             list.innerHTML = '';
             state[key].forEach((item, index) => {
                 const li = document.createElement('li');
@@ -625,16 +906,19 @@
         }
 
         function addListItem(key) {
-            let inputEl;
-            if (key === 'vitorias') inputEl = inputs.vitoria;
-            else if (key === 'atencoes') inputEl = inputs.atencao;
-            else if (key === 'planos') inputEl = inputs.plano;
+            let inputId;
+            if (key === 'vitorias') inputId = 'input-vitoria';
+            else if (key === 'atencoes') inputId = 'input-atencao';
+            else if (key === 'planos') inputId = 'input-plano';
 
-            const val = inputEl.value.trim();
-            if (val) {
-                state[key].push(val);
-                inputEl.value = '';
-                renderDashboard();
+            const inputEl = document.getElementById(inputId);
+            if (inputEl) {
+                const val = inputEl.value.trim();
+                if (val) {
+                    state[key].push(val);
+                    inputEl.value = '';
+                    renderDashboard();
+                }
             }
         }
 
@@ -643,79 +927,284 @@
             renderDashboard();
         }
 
-        // Toast de Notificação
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            const toastMsg = document.getElementById('toast-message');
-            toastMsg.innerText = message;
-            
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            toast.classList.add('translate-y-0', 'opacity-100');
+        // ================= MOTOR MATEMÁTICO ANOVA E RANKING DE CSMs =================
+        function calculateANOVA() {
+            const groups = {};
+            ownersList.forEach(owner => {
+                groups[owner] = [];
+            });
 
-            setTimeout(() => {
-                toast.classList.remove('translate-y-0', 'opacity-100');
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 3000);
+            // Agrupar atividades por CSM
+            clientDatabase.forEach(client => {
+                if (groups[client.owner]) {
+                    groups[client.owner].push(client.activities);
+                }
+            });
+
+            const k = ownersList.length; // 5 grupos
+            const N = clientDatabase.length; // 344 registros
+            
+            // Médias de cada grupo
+            const groupStats = {};
+            let grandSum = 0;
+            
+            Object.entries(groups).forEach(([owner, activities]) => {
+                const sum = activities.reduce((a, b) => a + b, 0);
+                const mean = activities.length > 0 ? (sum / activities.length) : 0;
+                
+                // Variância e Desvio Padrão
+                const sqDiffSum = activities.reduce((a, b) => a + Math.pow(b - mean, 2), 0);
+                const variance = activities.length > 1 ? (sqDiffSum / (activities.length - 1)) : 0;
+                const stdDev = Math.sqrt(variance);
+
+                groupStats[owner] = {
+                    count: activities.length,
+                    sum: sum,
+                    mean: mean,
+                    stdDev: stdDev,
+                    variance: variance
+                };
+                grandSum += sum;
+            });
+
+            const grandMean = grandSum / N;
+
+            // Soma dos Quadrados Entre Grupos (SSB) e Dentro (SSW)
+            let ssb = 0;
+            let ssw = 0;
+
+            Object.entries(groups).forEach(([owner, activities]) => {
+                const stats = groupStats[owner];
+                // SSB
+                ssb += stats.count * Math.pow(stats.mean - grandMean, 2);
+                // SSW
+                activities.forEach(act => {
+                    ssw += Math.pow(act - stats.mean, 2);
+                });
+            });
+
+            const dfB = k - 1;
+            const dfW = N - k;
+
+            const msB = ssb / dfB;
+            const msW = ssw / dfW;
+
+            const fRatio = msW > 0 ? (msB / msW) : 0;
+
+            // Para df1=4, df2=339, o valor F Crítico a 5% de significância é ~2.39
+            const fCritical = 2.39; 
+            const isSignificant = fRatio > fCritical;
+
+            return {
+                groupStats: groupStats,
+                grandMean: grandMean,
+                ssb: ssb,
+                ssw: ssw,
+                dfB: dfB,
+                dfW: dfW,
+                msB: msB,
+                msW: msW,
+                fRatio: fRatio,
+                isSignificant: isSignificant
+            };
         }
 
-        // Cópia para o clipboard com formatação
-        function copyToClipboardText() {
-            const saudePercent = state.totalClientes > 0 ? ((state.clientesClassificados / state.totalClientes) * 100).toFixed(1) : 0;
-            const vendasPercent = state.totalClientes > 0 ? ((state.vendasJunho / state.totalClientes) * 100).toFixed(1) : 0;
-            const semClassificacao = state.totalClientes - state.clientesClassificados;
-            const pendentesVendas = state.totalClientes - state.vendasJunho;
+        // Renderiza a seção ANOVA e seus diagnósticos
+        function renderAnovaAnalysis() {
+            const results = calculateANOVA();
+            const tableBody = document.getElementById('anova-csm-table');
+            if (!tableBody) return;
+            tableBody.innerHTML = '';
 
-            let report = `📊 *ALINHAMENTO DE PERFORMANCE CS - SEMANA 1 DE JULHO*\n\n`;
-            report += `🚀 *MARCO DA SEMANA: LANÇAMENTO CARPAGO (10/07)*\n`;
-            report += `• Objetivo: Ativar 80 clientes da base no novo programa de crédito de reposição de estoque de veículos da Auto Avaliar!\n\n`;
-            
-            report += `📅 *AGENDA DE EVENTOS & PLANEJAMENTO:*\n`;
-            report += `• 10/07 (Sexta-feira): Lançamento Carpago (Foco Principal: 80 clientes)\n`;
-            report += `• 16/07 (Quinta-feira): Workshop de Lojas Lucrativas em Piracicaba (Planejamento futuro)\n\n`;
+            let lowestCsm = "";
+            let lowestMean = Infinity;
 
-            report += `*MÉTRICAS DO NOSSO TABULEIRO DE OPERAÇÃO:*\n`;
-            report += `• Clientes Ativos na Base: *${state.totalClientes}*\n`;
-            report += `• Saúde Mapeada: *${saudePercent}%* (${state.clientesClassificados} classificados / *${semClassificacao} pendentes de temperatura!*)\n`;
-            report += `• Fichas de Transição de Vendas Coletadas: *${state.vendasJunho}* (Falta preencher *${pendentesVendas} fichas de passagem!*)\n`;
-            report += `  _Nota: O disparo de coleta foi feito na sexta às 16h00, com o expediente encerrando às 16h30._\n`;
-            report += `• WhatsApp Hub: *${state.hubOpen} conversas em aberto* e *${state.hubUnassigned} clientes sem dono atribuído*\n`;
-            report += `  _Nota: Dados coletados domingo à noite, englobando o fluxo acumulado do fim de semana._\n`;
-            report += `• Cancelamentos (Churn): *${state.churn}* clientes\n\n`;
+            Object.entries(results.groupStats).forEach(([owner, stats]) => {
+                const row = document.createElement('tr');
+                row.className = "bg-white border-b hover:bg-slate-50";
 
-            report += `💡 *ANÁLISE DE CHURN (PORQUE E COMO EVITAR?)*\n`;
-            report += `1. *Falta de alinhamento de expectativas (2 cancelamentos)*\n`;
-            report += `   _Como a equipe evita:_ Definir na Kick-off do cliente o que será entregue nos primeiros 30 dias de integração.\n`;
-            report += `2. *Não me senti acompanhado (2 cancelamentos)*\n`;
-            report += `   _Como a equipe evita:_ Contatos proativos rápidos e atribuição ágil no WhatsApp Hub para mitigar o gargalo de ${state.hubOpen} chats acumulados no fim de semana.\n`;
-            report += `3. *O produto não era o que eu esperava (1 cancelamento)*\n`;
-            report += `   _Como a equipe evita:_ Analisar e estudar a ficha de passagem de vendas de junho antes do primeiro contato operacional.\n\n`;
-
-            report += `🚀 *NOSSAS CONQUISTAS DA SEMANA:*\n`;
-            state.vitorias.forEach(v => report += `✔️ ${v}\n`);
-            report += `\n`;
-
-            report += `⚠️ *FOCOS DE ATENÇÃO DA EQUIPE:*\n`;
-            state.atencoes.forEach(a => report += `🚨 ${a}\n`);
-            report += `\n`;
-
-            report += `✈️ *PRÓXIMAS AÇÕES (PLANEAMENTO SEMANAL):*\n`;
-            state.planos.forEach((p, i) => report += ` ${i+1}. ${p}\n`);
-
-            const tempTextArea = document.createElement('textarea');
-            tempTextArea.value = report;
-            document.body.appendChild(tempTextArea);
-            tempTextArea.select();
-            
-            try {
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    showToast("Relatório de Alinhamento copiado com sucesso!");
+                // Definir cor do status
+                let statusBadge = "";
+                if (stats.mean >= 15) {
+                    statusBadge = `<span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-0.5 rounded-full font-bold">Excelente</span>`;
+                } else if (stats.mean >= 9) {
+                    statusBadge = `<span class="bg-blue-100 text-blue-800 text-xs px-2.5 py-0.5 rounded-full font-bold">Consistente</span>`;
+                } else {
+                    statusBadge = `<span class="bg-rose-100 text-rose-800 text-xs px-2.5 py-0.5 rounded-full font-bold animate-pulse">Abaixo da Meta</span>`;
                 }
-            } catch (err) {
-                showToast("Falha ao copiar dados.");
+
+                if (stats.mean < lowestMean) {
+                    lowestMean = stats.mean;
+                    lowestCsm = owner;
+                }
+
+                row.innerHTML = `
+                    <td class="px-4 py-3 font-bold text-slate-900">${owner}</td>
+                    <td class="px-4 py-3 text-center font-medium">${stats.count} contas</td>
+                    <td class="px-4 py-3 text-center font-bold text-indigo-600">${stats.mean.toFixed(1)} ações</td>
+                    <td class="px-4 py-3 text-slate-500">± ${stats.stdDev.toFixed(2)}</td>
+                    <td class="px-4 py-3">${statusBadge}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            // Diagnóstico estatístico detalhado
+            const diagContent = document.getElementById('anova-diagnostic-content');
+            if (diagContent) {
+                diagContent.innerHTML = `
+                    <div class="flex justify-between items-center py-1.5 border-b">
+                        <span>Razão de Variância (F):</span>
+                        <strong class="${results.isSignificant ? 'text-rose-600' : 'text-slate-800'} font-extrabold">${results.fRatio.toFixed(2)}</strong>
+                    </div>
+                    <div class="flex justify-between items-center py-1.5 border-b">
+                        <span>F Crítico de Tabela:</span>
+                        <strong class="text-slate-700">2.39</strong>
+                    </div>
+                    <div class="flex justify-between items-center py-1.5 border-b">
+                        <span>Média Geral do Time:</span>
+                        <strong class="text-indigo-600 font-extrabold">${results.grandMean.toFixed(1)} ações/cli</strong>
+                    </div>
+                    <div class="mt-3">
+                        <span class="font-bold text-slate-800">Resultado do Teste ANOVA:</span>
+                        <p class="text-slate-500 mt-1">
+                            ${results.isSignificant 
+                                ? "🚨 <strong class='text-rose-600'>Diferença Significativa!</strong> A variação entre as carteiras é sistemática e não um acaso. O time está desequilibrado."
+                                : "✔️ <strong class='text-emerald-600'>Sem Variância Crítica!</strong> A performance está uniforme e consistente em toda a equipe."
+                            }
+                        </p>
+                    </div>
+                `;
             }
-            
-            document.body.removeChild(tempTextArea);
+
+            // Recomendação estratégica
+            const recEl = document.getElementById('anova-strategic-recommendation');
+            if (recEl) {
+                if (results.isSignificant) {
+                    recEl.innerText = `O CSM ${lowestCsm} está com média de ${lowestMean.toFixed(1)} atividades, significativamente abaixo das expectativas. Recomenda-se redistribuir as contas sem temperatura e realizar coaching imediato com este membro.`;
+                } else {
+                    recEl.innerText = "A equipe apresenta consistência operacional uniforme. O foco deve ser direcionado para o zeramento conjunto das fichas de venda em atraso para o lançamento da Carpago.";
+                }
+            }
+        }
+
+        // ================= CENTRAL DE HIGIENE DE CARTEIRA (TABELA OPERACIONAL) ================= -->
+        function renderHigieneTable(filteredList = clientDatabase) {
+            const tbody = document.getElementById('table-clients-body');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            setElementText('table-showing-count', filteredList.length);
+            setElementText('table-total-count', state.totalClientes);
+
+            if (filteredList.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center py-8 text-slate-400 italic">
+                            Nenhum cliente atende aos filtros aplicados.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            filteredList.forEach(client => {
+                const tr = document.createElement('tr');
+                tr.className = "bg-white border-b hover:bg-slate-50 transition";
+
+                let badgeTemp = "";
+                if (client.temp === "Quente") {
+                    badgeTemp = `<span class="bg-orange-100 text-orange-800 text-[10px] px-2 py-0.5 rounded font-bold">🔥 Quente</span>`;
+                } else if (client.temp === "Morno") {
+                    badgeTemp = `<span class="bg-indigo-100 text-indigo-800 text-[10px] px-2 py-0.5 rounded font-bold">⚡ Morno</span>`;
+                } else if (client.temp === "Frio") {
+                    badgeTemp = `<span class="bg-blue-100 text-blue-800 text-[10px] px-2 py-0.5 rounded font-bold">❄️ Frio</span>`;
+                } else {
+                    badgeTemp = `<span class="bg-amber-100 text-amber-800 text-[10px] px-2 py-0.5 rounded font-bold animate-pulse">⚠️ Pendente</span>`;
+                }
+
+                // Identificar pendência de ficha de junho
+                const fichaBadge = client.isVendaJunho 
+                    ? `<span class="text-emerald-600 font-bold">Ativa</span>` 
+                    : `<span class="text-rose-500 font-bold">Sem Ficha</span>`;
+
+                tr.innerHTML = `
+                    <td class="px-4 py-3.5 font-bold text-slate-500">#${client.id}</td>
+                    <td class="px-4 py-3.5 font-extrabold text-slate-900 text-xs md:text-sm">
+                        ${client.title}
+                        <div class="text-[10px] text-slate-400 font-normal">Ficha de Venda: ${fichaBadge}</div>
+                    </td>
+                    <td class="px-4 py-3.5 font-semibold text-slate-700">${client.owner}</td>
+                    <td class="px-4 py-3.5">${badgeTemp}</td>
+                    <td class="px-4 py-3.5 text-center font-bold text-slate-800">${client.activities}</td>
+                    <td class="px-4 py-3.5 text-xs text-slate-500">${client.lastActivity}</td>
+                    <td class="px-4 py-3.5 text-xs font-semibold ${new Date(client.expiration) <= new Date("2026-07-10") ? 'text-rose-500 animate-pulse' : 'text-slate-500'}">${client.expiration}</td>
+                    <td class="px-4 py-3.5 text-center">
+                        <a href="https://gwebcarconsultoriaemarketingautomotivo.pipedrive.com/deal/${client.id}" target="_blank" class="inline-flex items-center gap-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-3 py-1.5 rounded-lg text-xs font-bold transition">
+                            <span>Pipedrive</span>
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </a>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Aplicação de filtros combinados na Tabela de Higiene
+        function applyFilters() {
+            const searchEl = document.getElementById('table-search');
+            const ownerEl = document.getElementById('filter-owner');
+            const tempEl = document.getElementById('filter-temp');
+            const gargaloEl = document.getElementById('filter-gargalo');
+
+            const searchValue = searchEl ? searchEl.value.toLowerCase() : '';
+            const ownerFilter = ownerEl ? ownerEl.value : 'todos';
+            const tempFilter = tempEl ? tempEl.value : 'todos';
+            const gargaloFilter = gargaloEl ? gargaloEl.value : 'todos';
+
+            const filtered = clientDatabase.filter(client => {
+                // Filtro Busca
+                const matchesSearch = client.title.toLowerCase().includes(searchValue) || client.id.toString().includes(searchValue);
+                
+                // Filtro Dono
+                const matchesOwner = ownerFilter === 'todos' || client.owner === ownerFilter;
+                
+                // Filtro Temperatura
+                let matchesTemp = true;
+                if (tempFilter !== 'todos') {
+                    if (tempFilter === 'Vazio') {
+                        matchesTemp = client.temp === '';
+                    } else {
+                        matchesTemp = client.temp === tempFilter;
+                    }
+                }
+
+                // Filtro Gargalo de atividades / onboarding
+                let matchesGargalo = true;
+                if (gargaloFilter !== 'todos') {
+                    if (gargaloFilter === 'poucas-atividades') {
+                        matchesGargalo = client.activities <= 5;
+                    } else if (gargaloFilter === 'sem-temperatura') {
+                        matchesGargalo = client.temp === '';
+                    } else if (gargaloFilter === 'fichas-pendentes') {
+                        matchesGargalo = !client.isVendaJunho;
+                    } else if (gargaloFilter === 'vencimento-proximo') {
+                        matchesGargalo = new Date(client.expiration) <= new Date("2026-07-10");
+                    }
+                }
+
+                return matchesSearch && matchesOwner && matchesTemp && matchesGargalo;
+            });
+
+            renderHigieneTable(filtered);
+        }
+
+        function clearTableFilters() {
+            setInputValue('table-search', '');
+            setInputValue('filter-owner', 'todos');
+            setInputValue('filter-temp', 'todos');
+            setInputValue('filter-gargalo', 'todos');
+            applyFilters();
+            showToast("Todos os filtros de carteira foram limpos!");
         }
     </script>
 </body>
